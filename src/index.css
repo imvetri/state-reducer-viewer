@@ -1,0 +1,10 @@
+.box {
+    border:1px solid black;
+    padding: 5px;
+    width: 200px;
+    height: 300px;
+}
+
+.smallWidth{
+    width: 99%;
+}
