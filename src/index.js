@@ -3,7 +3,7 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
 
-import style from "./index.css";
+import State from "./State";
 
 class Index extends Component {
     constructor(props) {
@@ -11,42 +11,19 @@ class Index extends Component {
         this.state = {
             name: "Default",
             data: {
-                status: "Anonymouse"
+                status: "Anonymous"
             },
-            reducers: [],
-            inProgressReducer: ""
+            reducers: []
         }
     }
 
-    storeReducer(e) {
-        this.setState({
-            inProgressReducer: e.target.value
-        })
-    }
-
-    saveReducer(){
-        let reducer = this.state.inProgressReducer;
-        let reducers = Array.from(this.state.reducers);
-        reducers.push(reducer);
-        this.setState({
-            reducers
-        });
+    saveState(state) {
+        console.log(state);
     }
 
     render(){
-        let reducers = this.state.reducers.map(reducer=> <input className={style.smallWidth} disabled value={reducer}/>);
-
         return (
-            <div className={style.box}>
-                <label>Name</label>
-                <input className={style.smallWidth} type="text"/>
-                <label>Data</label>
-                <textarea className={style.smallWidth} />
-                <label>Reducers</label>
-                {reducers}
-                <input placeholder="New reducers" onChange={this.storeReducer.bind(this)} className={style.smallWidth} type="text"/>
-                <button onClick={this.saveReducer.bind(this)}>Add</button>
-            </div>
+            <State state={this.state} onSave={this.saveState.bind(this)}/>
         );
     }
 }
