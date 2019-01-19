@@ -17,22 +17,31 @@ class State extends Component {
     }
 
     render(){
-        let reducers = this.props.state.reducers.map(reducer=> <input onClick={this.props.openState} className={style.smallWidth} value={reducer}/>);
 
+        let getState = state => {
+            let reducers = state.reducers.map(reducer=> <input onClick={this.props.openState} className={style.smallWidth} value={reducer}/>);
+            let children= <ul>{state.states.map(getState)}</ul>
+            return (
+                <li className={style.box}>
+                    <button className={style.block} onClick={this.props.collapse}>X</button>
+                    <label>Name</label>
+                    <input onChange={this.props.saveName} className={style.smallWidth} type="text" value={state.name}/>
+                    <label>Data</label>
+                    <textarea onChange={this.props.saveData} className={style.smallWidth} value={JSON.stringify(state.data)}/>
+                    <label>Reducers</label>
+                    {reducers}
+                    <input placeholder="New reducers" onChange={this.props.storeReducer} className={style.smallWidth} type="text"/>
+                    <button onClick={this.props.saveReducer}>Add</button>
+                    <button onClick={this.props.saveState}>Save</button>
+                    {children}
+                </li>
+            );
+        }
         return (
-            <div className={style.box}>
-                <button className={style.block}onClick={this.props.closeState}>X</button>
-                <label>Name</label>
-                <input onChange={this.props.saveName} className={style.smallWidth} type="text" value={this.props.state.name}/>
-                <label>Data</label>
-                <textarea onChange={this.props.saveData} className={style.smallWidth} value={JSON.stringify(this.props.state.data)}/>
-                <label>Reducers</label>
-                {reducers}
-                <input placeholder="New reducers" onChange={this.props.storeReducer} className={style.smallWidth} type="text"/>
-                <button onClick={this.props.saveReducer}>Add</button>
-                <button onClick={this.props.saveState}>Save</button>
-            </div>
-        );
+            <ul>
+                {this.props.state.map(getState)}
+            </ul>
+        )
     }
 }
 
