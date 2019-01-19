@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Default1",
+        "data": {
+            "status": "Anonymous"
+        },
+        "reducers": [
+            "state.status='LoggedIn'",
+            "state.status='LoggedOut'"
+        ],
+        "states": [
+            {
+                "name": "Default2",
+                "data": {
+                    "status": "LoggedIn"
+                },
+                "reducers": [],
+                "states": []
+            },
+            {
+                "name": "Default3",
+                "data": {
+                    "status": "LoggedOut"
+                },
+                "reducers": [],
+                "states": []
+            }
+        ]
+    }
+]

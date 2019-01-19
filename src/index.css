@@ -8,3 +8,8 @@
 .smallWidth{
     width: 99%;
 }
+
+.block{
+    display:block;
+    float:right;
+}

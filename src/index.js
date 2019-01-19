@@ -1,16 +1,15 @@
 // Libraries.
 
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 import State from "./State";
 
 import mockState from "./tests/mockState.json";
-console.log(mockState)
 class Index extends Component {
     constructor(props) {
         super(props);
-        this.state = mockState;
+        this.states = mockState;
     }
 
     saveState(state) {
@@ -20,7 +19,7 @@ class Index extends Component {
     openChildState(state) {
         // Create new state from state.reducer and state.data
         let newState = Object.assign({}, this.state);
-        let reducerFunction = new Function("state", state.inProgressReducer+";return state");
+        let reducerFunction = new Function("state", state.inProgressReducer + ";return state");
         let reducedState = reducerFunction(newState.data);
         newState.states.push(reducedState);
         this.setState(newState);
@@ -32,7 +31,7 @@ class Index extends Component {
         })
     }
 
-    saveData(e) {
+    storeData(e) {
         this.setState({
             data: e.target.value
         })
@@ -59,35 +58,54 @@ class Index extends Component {
         })
     }
 
-    updateState() {
-        this.props.onSave(this.state);
-    }
-
     openState() {
         console.log("STATE TO BE OPENED");
         this.props.openChildState(this.state);
     }
 
+    printState(state) {
+        console.log(state);
+        state.states.forEach(this.printState.bind(this));
+    }
+
+    /**
+     * Recursively finds all the children states from the given state.
+     * @param {*} result 
+     * @param {*} state 
+     */
+    collectChildrenStates (result, state) {
+        result.push(state);
+        return state.states.reduce(this.collectChildrenStates.bind(this),result)
+    }
+    
     printState(state){
         console.log(state.data);
         state.states.forEach(this.printState.bind(this));
     }
 
-    render(){
-
+    closeState() {
         this.printState(this.state);
-        return (
-            <State state={this.state}
-                   onSave={this.saveState.bind(this)} 
-                   saveData={this.saveData.bind(this)}
-                   saveReducer={this.saveReducer.bind(this)}
-                   storeReducer={this.storeReducer.bind(this)}
-                   saveState={this.saveState.bind(this)}
-                   updateState={this.updateState.bind(this)}
-                   openState={this.openState.bind(this)}
-                   saveName={this.saveName.bind(this)}/>
-        );
+    }
+
+    render() {
+        let states = this.states.reduce(this.collectChildrenStates.bind(this),[])
+        // this.states.forEach(this.printState.bind(this))
+        
+        return states.map(state=>(
+                <State state={state}
+                saveName={this.saveName.bind(this)}
+                storeData={this.storeData.bind(this)}
+                storeReducer={this.storeReducer.bind(this)}
+
+                saveReducer={this.saveReducer.bind(this)}
+                saveState={this.saveState.bind(this)}
+                
+                openState={this.openState.bind(this)}
+                closeState={this.closeState.bind(this)}
+                
+                children={this.states}/>
+            ))
     }
 }
 
-ReactDOM.render(<Index/>, document.getElementById("index"));
+ReactDOM.render(<Index />, document.getElementById("index"));
