@@ -63,49 +63,39 @@ class Index extends Component {
         this.props.openChildState(this.state);
     }
 
-    printState(state) {
-        console.log(state);
-        state.states.forEach(this.printState.bind(this));
-    }
-
     /**
      * Recursively finds all the children states from the given state.
      * @param {*} result 
      * @param {*} state 
      */
-    collectChildrenStates (result, state) {
+    collectChildrenStates(result, state) {
         result.push(state);
-        return state.states.reduce(this.collectChildrenStates.bind(this),result)
-    }
-    
-    printState(state){
-        console.log(state.data);
-        state.states.forEach(this.printState.bind(this));
+        return state.states.reduce(this.collectChildrenStates.bind(this), result)
     }
 
-    closeState() {
-        this.printState(this.state);
+    getNodes(result, state) {
+        let lists = state.states.reduce(this.getNodes.bind(this), result);
+        return lists;
+    }
+
+    collapse() {
+        this.getNodes(this.state);
     }
 
     render() {
-        let states = this.states.reduce(this.collectChildrenStates.bind(this),[])
-        // this.states.forEach(this.printState.bind(this))
-        
-        return states.map(state=>(
-                <State state={state}
-                saveName={this.saveName.bind(this)}
-                storeData={this.storeData.bind(this)}
-                storeReducer={this.storeReducer.bind(this)}
 
-                saveReducer={this.saveReducer.bind(this)}
-                saveState={this.saveState.bind(this)}
-                
-                openState={this.openState.bind(this)}
-                closeState={this.closeState.bind(this)}
-                
-                children={this.states}/>
-            ))
+        return (<State state={this.states}
+            saveName={this.saveName.bind(this)}
+            storeData={this.storeData.bind(this)}
+            storeReducer={this.storeReducer.bind(this)}
+
+            saveReducer={this.saveReducer.bind(this)}
+            saveState={this.saveState.bind(this)}
+
+            openState={this.openState.bind(this)}
+            collapse={this.collapse.bind(this)}/>);
     }
+
 }
 
 ReactDOM.render(<Index />, document.getElementById("index"));
