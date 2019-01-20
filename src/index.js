@@ -62,7 +62,7 @@ class Index extends Component {
         return stateUnderEdit;
     }
 
-    saveReducer() {
+    saveReducer(e) {
         // Get new state.
         let newState = [Object.assign({}, this.states[0])];
         // Get state under edit.
@@ -117,7 +117,31 @@ class Index extends Component {
     }
 
     updateReducer (e) {
-        console.log(e.target.value)
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
+
+        // Get reducer index.
+        let reducerIndex = e.target.getAttribute("index");
+
+        stateUnderEdit.reducers[reducerIndex] = e.target.value;
+
+        stateUnderEdit.states.splice(reducerIndex,1);
+
+        let reducerFunction = new Function("state", e.target.value+";return state");
+
+        stateUnderEdit.states.push({
+            data: reducerFunction(Object.assign({},stateUnderEdit.data)),
+            name:stateUnderEdit.name+"child",
+            reducers:[],
+            states:[]
+        });
+        
+        this.setState({
+            states: newState
+        });
+
     }
 
     render() {

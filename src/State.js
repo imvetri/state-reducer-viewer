@@ -12,11 +12,11 @@ class State extends Component {
 
     render(){
 
-        let getState = state => {
-            let reducers = state.reducers.map(reducer=> <input onChange={this.props.updateReducer}className={style.smallWidth} value={reducer}/>);
+        let getState = (state, index) => {
+            let reducers = state.reducers.map((reducer,index)=> <input onChange={this.props.updateReducer} index={index} className={style.smallWidth} value={reducer}/>);
             let children= <ul>{state.states.map(getState)}</ul>
             return (
-                <li onMouseEnter={this.props.syncCurrentState} statename={state.name}className={style.box}>
+                <li onMouseEnter={this.props.syncCurrentState} statename={state.name} className={style.box} index={index}>
                     <label>Name</label>
                     <input onChange={this.props.storeName} className={style.smallWidth} type="text" value={state.name}/>
                     <label>Data</label>
