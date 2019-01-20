@@ -11,18 +11,35 @@ class Index extends Component {
         super(props);
         this.states = mockState;
         this.stateUnderEdit = "";
+        this.nameUnderEdit = ";"
     }
 
-    saveName(e) {
+    storeName(e) {
+
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
+
+        stateUnderEdit.name = e.target.value;
+
         this.setState({
-            name: e.target.value
-        })
+            states: newState
+        });
     }
 
     storeData(e) {
+  
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
+
+        stateUnderEdit.data = JSON.parse(e.target.value);
+
         this.setState({
-            data: e.target.value
-        })
+            states: newState
+        });
     }
 
     storeReducer(e) {
@@ -68,14 +85,19 @@ class Index extends Component {
     }
 
     saveState() {
-        this.setState({
-            data: JSON.parse(this.state.data)
-        })
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
+
+
+        this.setState(newState);
     }
 
     syncCurrentState(e) {
         if(e.target.getAttribute("statename")){
-            this.stateUnderEdit =e.target.getAttribute("statename");
+            console.log(e.target.getAttribute("statename"));
+            this.stateUnderEdit = e.target.getAttribute("statename");
         }
     }
 
@@ -94,15 +116,20 @@ class Index extends Component {
         return lists;
     }
 
+    updateReducer (e) {
+        console.log(e.target.value)
+    }
+
     render() {
 
         return (<State state={this.states}
-            saveName={this.saveName.bind(this)}
+            storeName={this.storeName.bind(this)}
             storeData={this.storeData.bind(this)}
             storeReducer={this.storeReducer.bind(this)}
             syncCurrentState={this.syncCurrentState.bind(this)}
             saveReducer={this.saveReducer.bind(this)}
-            saveState={this.saveState.bind(this)}/>);
+            saveState={this.saveState.bind(this)}
+            updateReducer={this.updateReducer.bind(this)}/>);
     }
 
 }
