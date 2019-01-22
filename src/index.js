@@ -6,61 +6,99 @@ import ReactDOM from "react-dom";
 import State from "./State";
 
 import mockState from "./tests/mockState.json";
-class Index extends Component {
+class StateReducerViewer extends Component {
     constructor(props) {
         super(props);
         this.states = mockState;
+        this.stateUnderEdit = "";
+        this.nameUnderEdit = ";"
     }
 
-    saveState(state) {
-        console.log(state);
-    }
+    storeName(e) {
 
-    openChildState(state) {
-        // Create new state from state.reducer and state.data
-        let newState = Object.assign({}, this.state);
-        let reducerFunction = new Function("state", state.inProgressReducer + ";return state");
-        let reducedState = reducerFunction(newState.data);
-        newState.states.push(reducedState);
-        this.setState(newState);
-    }
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
 
-    saveName(e) {
+        stateUnderEdit.name = e.target.value;
+
         this.setState({
-            name: e.target.value
-        })
+            states: newState
+        });
     }
 
     storeData(e) {
+  
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
+
+        stateUnderEdit.data = JSON.parse(e.target.value);
+
         this.setState({
-            data: e.target.value
-        })
+            states: newState
+        });
     }
 
     storeReducer(e) {
+        console.log(e.target.value);
         this.setState({
             inProgressReducer: e.target.value
         })
     }
 
-    saveReducer() {
+    getStateUnderEdit(newState) {
+        let stateUnderEdit;
+        const traverse=(state)=>{
+            if(state.name === this.stateUnderEdit){
+                stateUnderEdit = state;
+            }
+            state.states.forEach(traverse);
+        }
+
+        newState.forEach(traverse);
+        return stateUnderEdit;
+    }
+
+    saveReducer(e) {
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
         let reducer = this.state.inProgressReducer;
-        let reducers = Array.from(this.state.reducers);
-        reducers.push(reducer);
+        
+        stateUnderEdit.reducers.push(reducer);
+
+        let reducerFunction = new Function("state", reducer+";return state");
+        stateUnderEdit.states.push({
+            data: reducerFunction(Object.assign({},stateUnderEdit.data)),
+            name:stateUnderEdit.name+"child",
+            reducers:[],
+            states:[]
+        });
+        
         this.setState({
-            reducers
+            states: newState
         });
     }
 
     saveState() {
-        this.setState({
-            data: JSON.parse(this.state.data)
-        })
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
+
+
+        this.setState(newState);
     }
 
-    openState() {
-        console.log("STATE TO BE OPENED");
-        this.props.openChildState(this.state);
+    syncCurrentState(e) {
+        if(e.target.getAttribute("statename")){
+            console.log(e.target.getAttribute("statename"));
+            this.stateUnderEdit = e.target.getAttribute("statename");
+        }
     }
 
     /**
@@ -78,24 +116,47 @@ class Index extends Component {
         return lists;
     }
 
-    collapse() {
-        this.getNodes(this.state);
+    updateReducer (e) {
+        // Get new state.
+        let newState = [Object.assign({}, this.states[0])];
+        // Get state under edit.
+        let stateUnderEdit = this.getStateUnderEdit(newState);
+
+        // Get reducer index.
+        let reducerIndex = e.target.getAttribute("index");
+
+        stateUnderEdit.reducers[reducerIndex] = e.target.value;
+
+        stateUnderEdit.states.splice(reducerIndex,1);
+
+        let reducerFunction = new Function("state", e.target.value+";return state");
+
+        stateUnderEdit.states.push({
+            data: reducerFunction(Object.assign({},stateUnderEdit.data)),
+            name:stateUnderEdit.name+"child",
+            reducers:[],
+            states:[]
+        });
+        
+        this.setState({
+            states: newState
+        });
+
     }
 
     render() {
 
         return (<State state={this.states}
-            saveName={this.saveName.bind(this)}
+            storeName={this.storeName.bind(this)}
             storeData={this.storeData.bind(this)}
             storeReducer={this.storeReducer.bind(this)}
-
+            syncCurrentState={this.syncCurrentState.bind(this)}
             saveReducer={this.saveReducer.bind(this)}
             saveState={this.saveState.bind(this)}
-
-            openState={this.openState.bind(this)}
-            collapse={this.collapse.bind(this)}/>);
+            updateReducer={this.updateReducer.bind(this)}/>);
     }
 
 }
 
-ReactDOM.render(<Index />, document.getElementById("index"));
+// ReactDOM.render(<Index />, document.getElementById("index"));
+export default StateReducerViewer;

@@ -2,7 +2,7 @@
   "name": "state-reducer-viewer",
   "version": "1.0.0",
   "description": "Create/edit/delete states using reducer functions",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/imvetri/state-reducer-viewer.git"
   },
-  "author": "",
+  "author": "Vetrivel, Shanmugam",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/imvetri/state-reducer-viewer/issues"
