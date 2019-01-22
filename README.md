@@ -112,7 +112,7 @@ reducers - Array of function definitions.
 	]
 	<StateReducerViewer states={states}/>
 Will render below viewer.
-![A tree view rendered format](https://github.com/imvetri/state-reducer-viewer/blob/master/Viewer.png)
+![A tree view rendered format](https://github.com/imvetri/state-reducer-viewer/blob/master/Viewer.png {width=354px height=422px})
 
 ## Example demos
 
