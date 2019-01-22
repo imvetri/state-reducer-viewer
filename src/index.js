@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import State from "./State";
 
 import mockState from "./tests/mockState.json";
-class Index extends Component {
+class StateReducerViewer extends Component {
     constructor(props) {
         super(props);
         this.states = mockState;
@@ -158,4 +158,5 @@ class Index extends Component {
 
 }
 
-ReactDOM.render(<Index />, document.getElementById("index"));
+// ReactDOM.render(<Index />, document.getElementById("index"));
+export default StateReducerViewer;
