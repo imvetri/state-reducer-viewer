@@ -3,9 +3,14 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
     template: "./src/index.html",
     filename: "./index.html"
 });
+const path = require("path");
 
 module.exports = {
     devtool: 'inline-source-map',
+    output: { 
+        path: path.resolve(__dirname),  
+        filename: 'main.js'                     // generated ./Project1/dist/js/out.js
+    },
     module: {
         rules: [
             {
