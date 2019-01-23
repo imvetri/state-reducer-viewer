@@ -1,4 +1,9 @@
-
+export function simpleReducer(state, action){
+    switch(action.type){
+        
+    }
+    return state;
+}
 export function getStateUnderEdit(newState) {
     let stateUnderEdit;
     const traverse = (state) => {
@@ -14,12 +19,13 @@ export function getStateUnderEdit(newState) {
 
 export function storeName(e) {
 
+    let newStateName = e.target.value;
     // Get new state.
     let newState = [Object.assign({}, this.states[0])];
     // Get state under edit.
     let stateUnderEdit = this.getStateUnderEdit(newState);
 
-    stateUnderEdit.name = e.target.value;
+    stateUnderEdit.name = newStateName;
 
     this.setState({
         states: newState

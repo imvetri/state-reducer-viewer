@@ -6,13 +6,17 @@ import ReactDOM from "react-dom";
 import State from "./State";
 import SwitchMode from "./Switch";
 
-import { getStateUnderEdit, storeName, storeData, saveReducer, saveState, updateReducer } from "./IndexReducers";
+import { createStore } from "redux";  
 
-import mockState from "./tests/mockState.json";
+import { simpleReducer, getStateUnderEdit, storeName, storeData, saveReducer, saveState, updateReducer } from "./reducers/index";
+
+
+import { store } from "./store";
+
 class StateReducerViewer extends Component {
     constructor(props) {
         super(props);
-        this.states = mockState;
+        this.states = store.getState();
         this.stateUnderEdit = "";
         this.nameUnderEdit = "";
         this.state = { checked: false };

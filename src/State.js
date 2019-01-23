@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 
 import style from "./index.css";
 
+import { store } from "./store";
 class State extends Component {
     constructor(props) {
         super(props);
