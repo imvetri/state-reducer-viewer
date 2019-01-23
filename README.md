@@ -1,6 +1,6 @@
 # state-reducer-viewer
 
-Renders a tree of state, reducers/new states. Used in UI-Editor project.
+Renders a tree of state, reducers/new states. Used in UI-Editor project. [Sample Demo](https://imvetri.github.io/state-reducer-viewer/)
 ## Usage
 
     npm install "state-editor-viewer"
