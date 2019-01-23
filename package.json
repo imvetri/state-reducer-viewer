@@ -21,7 +21,8 @@
     "react": "^16.7.0",
     "react-codemirror": "^1.0.0",
     "react-dom": "^16.7.0",
-    "react-inspector": "^2.3.1"
+    "react-inspector": "^2.3.1",
+    "react-switch": "^3.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
