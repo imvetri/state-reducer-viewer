@@ -67,15 +67,15 @@ data - JSON details of state.
 Example: 
 
 	let states = [
-		 {
-			 name:"ValidInputState",
-			 data: {
-				 border:"black"
-			 },
-			 states: [],
-			 reducers: []
-		 }   
-    ];
+			{
+				name: "ValidInputState",
+				data: {
+					border:"black"
+				},
+				states: [],
+				reducers: []
+			}   
+	];
 name - String - name of the state. First state is named "default".
 states - Array of next states. Computed by running reducers agains data de here`
 reducers - Array of function definitions. 
@@ -84,40 +84,35 @@ reducers - Array of function definitions.
 	    {
 		    "name": "Initial State",
 		    "data": {
-					    "status": "Anonymous"
+						"status": "Anonymous"
 				    },
-				    "reducers": [
-					    "state.status='LoggedIn'",
-					    "state.status='LoggedOut'"
-				    ],
-				    "states": [
-				    {
-				    "name": "Loggedin State",
-				    "data": {
-					    "status": "LoggedIn"
-				    },
-				    "reducers": [],
-				    "states": []
-				    },
-				    {
-					    "name": "LoggedOut State",
-					    "data": {
-						    "status": "LoggedOut"
-					    },
-					    "reducers": [],
-					    "states": []
-				    }
-			    ]
+			"reducers": [
+				"state.status='LoggedIn'",
+				"state.status='LoggedOut'"
+			],
+			"states": [
+				{
+					"name": "Loggedin State",
+					"data": {
+								"status": "LoggedIn"
+							},
+					"reducers": [],
+					"states": []
+				},
+				{
+					"name": "LoggedOut State",
+					"data": {
+								"status": "LoggedOut"
+							},
+					"reducers": [],
+					"states": []
+				}
+			]
 		}
 	]
 	<StateReducerViewer states={states}/>
 Will render below viewer.
 ![A tree view rendered format](https://github.com/imvetri/state-reducer-viewer/blob/master/Viewer.png)
 
-## Example demos
-
-1. Takes a default data -  
-	2. <StateReducerViewer}/>
-	3. <StateReducerViewer data={your json data}/>
 
 :fist:
