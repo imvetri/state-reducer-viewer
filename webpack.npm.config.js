@@ -1,11 +1,12 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const htmlWebpackPlugin = new HtmlWebPackPlugin({
-    template: "./src/index.html",
-    filename: "../index.html"
-});
 module.exports = {
     devtool: 'inline-source-map',
-    mode: "production",
+    entry: {
+        entry: __dirname + '/dist/StateReducerViewer.js'
+    },
+    output: {
+        filename: 'StateReducerViewer.js'
+    },
+    mode: 'development',
     module: {
         rules: [
             {
@@ -34,6 +35,5 @@ module.exports = {
                 ]
             }
         ]
-    },
-    plugins: [htmlWebpackPlugin]
+    }
 };

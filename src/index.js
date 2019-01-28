@@ -6,5 +6,3 @@ import ReactDOM from "react-dom";
 import StateReducerViewer from "./StateReducerViewer";
 
 ReactDOM.render(<StateReducerViewer />, document.getElementById("index"));
-
-export default StateReducerViewer;

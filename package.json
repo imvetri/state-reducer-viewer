@@ -4,8 +4,9 @@
   "description": "Create/edit/delete states using reducer functions",
   "main": "src/StateReducerViewer.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production"
+    "start": "webpack-dev-server --mode development --open --config webpack.development.config",
+    "build": "webpack --mode production --config webpack.development.config",
+    "publish": "webpack --mode production --config webpack.npm.config"
   },
   "repository": {
     "type": "git",
