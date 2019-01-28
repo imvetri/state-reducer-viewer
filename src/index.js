@@ -58,6 +58,9 @@ class StateReducerViewer extends Component {
 
 }
 
-ReactDOM.render(<StateReducerViewer />, document.getElementById("index"));
+if(document){
+    ReactDOM.render(<StateReducerViewer />, document.getElementById("index"));
+
+}
 
 export default StateReducerViewer;
