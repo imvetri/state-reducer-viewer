@@ -1,8 +1,8 @@
 {
   "name": "state-reducer-viewer",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "Create/edit/delete states using reducer functions",
-  "main": "src/index.js",
+  "main": "src/StateReducerViewer.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
