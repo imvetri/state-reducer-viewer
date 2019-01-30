@@ -42,7 +42,7 @@ class StateReducerViewer extends Component {
             <div>
                 <SwitchMode switchMode={this.switchMode.bind(this)}/>
                 <State
-                    state={this.states}
+                    state={this.props.states || this.states}
                     storeName={storeName.bind(this)}
                     storeData={storeData.bind(this)}
                     storeReducer={this.storeReducer.bind(this)}
